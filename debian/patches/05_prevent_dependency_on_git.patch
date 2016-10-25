@@ -1,0 +1,29 @@
+From: Ruben Undheim <ruben.undheim@gmail.com>
+Date: Mon, 19 Sep 2016 08:03:15 +0200
+Subject: Set VER and GIT_REV explicitly so that the build does not need to be
+ done in a git repository.
+
+---
+ Makefile | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+--- a/Makefile
++++ b/Makefile
+@@ -19,13 +19,13 @@
+ .PHONY: all
+ all: bin/arachne-pnr share/arachne-pnr/chipdb-1k.bin share/arachne-pnr/chipdb-8k.bin
+ 
+-VER = 0.1+$(shell echo `git log --oneline | wc -l`)+$(shell echo `git diff --name-only HEAD | wc -l`)
+-GIT_REV = $(shell git rev-parse --verify --short HEAD)
++ARACHNE_VER := 0.1+$(shell echo `git log --oneline | wc -l`)+$(shell echo `git diff --name-only HEAD | wc -l`)
++GIT_REV := $(shell git rev-parse --verify --short HEAD)
+ 
+-VER_HASH = $(shell echo "$(VER) $(GIT_REV)" | sum | cut -d ' ' -f -1)
++VER_HASH = $(shell echo "$(ARACHNE_VER) $(GIT_REV)" | sum | cut -d ' ' -f -1)
+ 
+ src/version_$(VER_HASH).cc:
+-	echo "const char *version_str = \"arachne-pnr $(VER) (git sha1 $(GIT_REV), $(notdir $(CXX)) `$(CXX) --version | tr ' ()' '\n' | grep '^[0-9]' | head -n1` $(filter -f% -m% -O% -DNDEBUG,$(CXXFLAGS)))\";" > src/version_$(VER_HASH).cc
++	echo "const char *version_str = \"arachne-pnr $(ARACHNE_VER) (git sha1 $(GIT_REV), $(notdir $(CXX)) `$(CXX) --version | tr ' ()' '\n' | grep '^[0-9]' | head -n1` $(filter -f% -m% -O% -DNDEBUG,$(CXXFLAGS)))\";" > src/version_$(VER_HASH).cc
+ 
+ bin/arachne-pnr: src/arachne-pnr.o src/netlist.o src/blif.o src/pack.o src/place.o src/util.o src/io.o src/route.o src/chipdb.o src/location.o src/configuration.o src/line_parser.o src/pcf.o src/global.o src/constant.o src/designstate.o src/version_$(VER_HASH).o
+ 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $^ $(LIBS)

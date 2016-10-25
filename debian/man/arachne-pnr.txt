@@ -1,0 +1,70 @@
+NAME
+  arachne-pnr - Place and route tool for iCE40 family FGPAs
+
+SYNOPSIS
+  arachne-pnr [options] <filename>
+
+DESCRIPTION
+
+ Arachne-pnr implements the place and route step of the hardware compilation
+ process for FPGAs. It accepts as input a technology-mapped netlist in BLIF
+ format, as output by the Yosys synthesis suite for example. It currently
+ targets the Lattice Semiconductor iCE40 family of FPGAs. Its output is a
+ textual bitstream representation for assembly by the IceStorm icepack command.
+ The output of icepack is a binary bitstream which can be uploaded to a hardware
+ device.
+
+
+OPTIONS
+
+
+    -h, --help  Print this usage message.
+
+    -q, --quiet  Run quiet.  Don't output progress messages.
+
+    -d <device>, --device <device>  Target device <device>.  Supported devices:
+          1k - Lattice Semiconductor iCE40LP/HX1K
+          8k - Lattice Semiconductor iCE40LP/HX8K
+        Default: 1k
+
+    -c <file>, --chipdb <chipdb-file>  Read chip database from <chipdb-file>.
+        Default: /usr/share/arachne-pnr/chipdb-<device>.bin
+
+    --write-binary-chipdb <file>  Write binary chipdb to <file>.
+
+    -l, --no-promote-globals     Don't promote nets to globals.
+
+    -B <file>, --post-pack-blif <file>  Write post-pack netlist to <file> as BLIF.
+
+    -V <file>, --post-pack-verilog <file>  Write post-pack netlist to <file> as Verilog.
+
+    --post-place-blif <file>  Write post-place netlist to <file> as BLIF.
+
+    --route-only   Input must include placement.
+
+    -p <pcf-file>, --pcf-file <pcf-file>    Read physical constraints from <pcf-file>.
+
+    -P <package>, --package <package>   Target package <package>.
+        Default: tq144 for 1k, ct256 for 8k
+
+    -r  Randomize seed.
+
+    -m <int>, --max-passes <int>  Maximum number of routing passes.
+            Default: 200
+
+    -s <int>, --seed <int>  Set seed for random generator to <int>.
+        Default: 1
+
+    -w <pcf-file>, --write-pcf <pcf-file>  Write pin assignments to <pcf-file> after placement.
+
+    -o <output-file>, --output-file <output-file>  Write output to <output-file>.
+
+
+ 
+
+
+AUTHOR
+  This manual page was written by Ruben Undheim <ruben.undheim@gmail.com> for the Debian project (and may be used by others).
+
+
+

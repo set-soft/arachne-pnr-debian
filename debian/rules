@@ -1,0 +1,43 @@
+#!/usr/bin/make -f
+#export DH_VERBOSE = 1
+
+export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+
+export ICEBOX = /usr/share/fpga-icestorm/chipdb
+export OPTDEBUGFLAGS =
+export ARACHNE_VER = 0.1+$(shell echo `git log --oneline upstream | wc -l`)+$(shell echo `git diff --name-only | wc -l`)
+export GIT_REV = $(shell git rev-parse --verify --short upstream)
+ARACHNE_SKIP_TESTS ?= no
+
+CHANGELOG_DATE ?= $(shell LC_ALL=C date -u -d "`dpkg-parsechangelog --show-field Date`" +"%d %B %Y")
+
+%:
+	dh $@ 
+
+override_dh_auto_clean:
+	dh_auto_clean
+	$(RM) debian/man/*.1
+	$(RM) -r share/
+
+override_dh_installman:
+	cd debian/man ; CHANGELOG_DATE="$(CHANGELOG_DATE)" ./genmanpages.sh
+	dh_installman
+
+override_dh_auto_install:
+	dh_auto_install --parallel -- GIT_REV=$(GIT_REV) ARACHNE_VER=$(ARACHNE_VER) PREFIX=/usr
+
+override_dh_auto_build-arch:
+	dh_auto_build --parallel -- all GIT_REV=$(GIT_REV) ARACHNE_VER=$(ARACHNE_VER)
+
+override_dh_auto_build-indep:
+	dh_auto_build --parallel -- all GIT_REV=$(GIT_REV) ARACHNE_VER=$(ARACHNE_VER)
+
+override_dh_auto_test:
+ifeq ($(ARACHNE_SKIP_TESTS),yes)
+	echo "Skipping the tests"
+else
+	dh_auto_test --parallel -- GIT_REV=$(GIT_REV) ARACHNE_VER=$(ARACHNE_VER)
+endif
+

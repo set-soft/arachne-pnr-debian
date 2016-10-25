@@ -1,0 +1,20 @@
+From: Ruben Undheim <ruben.undheim@gmail.com>
+Date: Mon, 19 Sep 2016 08:03:15 +0200
+Subject: This makes sure that the chipdb files from icestorm are found when
+ building the package
+
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+--- a/Makefile
++++ b/Makefile
+@@ -14,7 +14,7 @@
+ LIBS = -lm
+ 
+ DESTDIR = /usr/local
+-ICEBOX = /usr/local/share/icebox
++ICEBOX ?= /usr/local/share/icebox
+ 
+ .PHONY: all
+ all: bin/arachne-pnr share/arachne-pnr/chipdb-1k.bin share/arachne-pnr/chipdb-8k.bin

@@ -1,0 +1,2 @@
+version=3
+https://github.com/cseed/arachne-pnr/releases /cseed/arachne-pnr/archive/\w+-(\d\S+)\.tar\.(?:bz2|gz|xz)

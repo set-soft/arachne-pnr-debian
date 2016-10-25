@@ -1,0 +1,6 @@
+01_path_to_icebox.patch
+03_fix_install_dir.patch
+04_cxxflags.patch
+05_prevent_dependency_on_git.patch
+0006-Fixed-spelling.patch
+0007-Proper-clean.patch

@@ -1,0 +1,48 @@
+Source: arachne-pnr
+Maintainer: Debian Science Maintainers <debian-science-maintainers@lists.alioth.debian.org>
+Uploaders: Ruben Undheim <ruben.undheim@gmail.com>
+Section: electronics
+Priority: optional
+Build-Depends: debhelper (>= 9),
+               fpga-icestorm-chipdb,
+               fpga-icestorm,
+               yosys,
+               txt2man
+Standards-Version: 3.9.8
+Vcs-Browser: https://anonscm.debian.org/cgit/debian-science/packages/arachne-pnr.git
+Vcs-Git: https://anonscm.debian.org/git/debian-science/packages/arachne-pnr.git
+Homepage: https://github.com/cseed/arachne-pnr
+
+Package: arachne-pnr-chipdb
+Architecture: all
+Depends: ${misc:Depends}
+Description: Chip db files for arachne-pnr
+ Arachne-pnr implements the place and route step of the hardware compilation
+ process for FPGAs. It accepts as input a technology-mapped netlist in BLIF
+ format, as output by the Yosys synthesis suite for example. It currently
+ targets the Lattice Semiconductor iCE40 family of FPGAs. Its output is a
+ textual bitstream representation for assembly by the IceStorm icepack command.
+ The output of icepack is a binary bitstream which can be uploaded to a hardware
+ device.
+ .
+ This package contains the binary versions of the chipdb files needed by
+ arachne-pnr
+
+Package: arachne-pnr
+Architecture: any
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+         arachne-pnr-chipdb,
+         yosys,
+         fpga-icestorm
+Description: Place and route tool for iCE40 family FPGAs
+ Arachne-pnr implements the place and route step of the hardware compilation
+ process for FPGAs. It accepts as input a technology-mapped netlist in BLIF
+ format, as output by the Yosys synthesis suite for example. It currently
+ targets the Lattice Semiconductor iCE40 family of FPGAs. Its output is a
+ textual bitstream representation for assembly by the IceStorm icepack command.
+ The output of icepack is a binary bitstream which can be uploaded to a hardware
+ device.
+ .
+ Together, Yosys, arachne-pnr and IceStorm provide an fully open-source
+ Verilog-to-bistream tool chain for iCE40 1K and 8K FPGA development.
