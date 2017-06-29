@@ -1,3 +1,9 @@
+arachne-pnr (0.1+20170629git7e135ed-1) stable; urgency=medium
+
+  * Removed patch absorved by upstream
+
+ -- Salvador Eduardo Tropea <salvador@inti.gov.ar>  Thu, 29 Jun 2017 08:38:12 -0300
+
 arachne-pnr (0.1+20170628git58e2dda-1) stable; urgency=medium
 
   * Added -pullup support
