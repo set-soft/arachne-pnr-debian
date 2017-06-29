@@ -1,0 +1,46 @@
+From: Ruben Undheim <ruben.undheim@gmail.com>
+Date: Mon, 19 Sep 2016 08:03:15 +0200
+Subject: The tests depend on fully installed new version of yosys. Skip them
+ during build
+
+---
+ Makefile | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 68e214f..87e6d72 100644
+--- a/Makefile
++++ b/Makefile
+@@ -57,19 +57,19 @@ simpletest: all tests/test_bv tests/test_us
+ 	@echo
+ 
+ # assumes icestorm, yosys installed
+-test: all tests/test_bv ./tests/test_us
+-	./tests/test_bv
+-	./tests/test_us
+-	make -C examples/rot clean && make -C examples/rot
+-	cd tests/simple && ICEBOX=$(ICEBOX) bash run-test.sh
+-	cd tests/regression && bash run-test.sh
+-	cd tests/blif && bash run-test.sh
+-	cd tests/error && bash run-test.sh
+-	cd tests/fsm && bash run-test.sh
+-	cd tests/combinatorial && bash run-test.sh
+-	@echo
+-	@echo 'All tests passed.'
+-	@echo
++#test: all tests/test_bv ./tests/test_us
++#	./tests/test_bv
++#	./tests/test_us
++#	make -C examples/rot clean && make -C examples/rot
++#	cd tests/simple && ICEBOX=$(ICEBOX) bash run-test.sh
++#	cd tests/regression && bash run-test.sh
++#	cd tests/blif && bash run-test.sh
++#	cd tests/error && bash run-test.sh
++#	cd tests/fsm && bash run-test.sh
++#	cd tests/combinatorial && bash run-test.sh
++#	@echo
++#	@echo 'All tests passed.'
++#	@echo
+ 
+ # assumes valgrind installed
+ testvg:
