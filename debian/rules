@@ -7,9 +7,10 @@ export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 
 export ICEBOX = /usr/share/fpga-icestorm/chipdb
 export OPTDEBUGFLAGS =
-export ARACHNE_VER = 0.1+$(shell echo `git log --oneline upstream | wc -l`)+$(shell echo `git diff --name-only | wc -l`)
-export GIT_REV = $(shell git rev-parse --verify --short upstream)
-ARACHNE_SKIP_TESTS ?= no
+export ARACHNE_VER = 0.1+$(shell echo `git log --oneline upstream/master | wc -l`)+$(shell echo `git diff --name-only | wc -l`)
+export GIT_REV = $(shell git rev-parse --verify --short upstream/master)
+ARACHNE_SKIP_TESTS ?= yes
+
 
 CHANGELOG_DATE ?= $(shell LC_ALL=C date -u -d "`dpkg-parsechangelog --show-field Date`" +"%d %B %Y")
 
